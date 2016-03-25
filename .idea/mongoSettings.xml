@@ -4,7 +4,7 @@
     <option name="serverConfigurations">
       <list>
         <ServerConfiguration>
-          <option name="label" value="houseInfo" />
+          <option name="label" value="my_database" />
           <option name="serverUrls">
             <list>
               <option value="localhost:27017" />
