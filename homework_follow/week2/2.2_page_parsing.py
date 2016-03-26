@@ -6,6 +6,7 @@ import time
 client = pymongo.MongoClient('localhost', 27017)
 tongcheng = client['tongcheng']
 item_list = tongcheng['item_list']
+item_info = tongcheng['item_info']
 
 
 def get_link_from(channel, pages, who_sells=0):
@@ -26,12 +27,25 @@ def get_link_from(channel, pages, who_sells=0):
 def get_item_info(url):
     web_data = requests.get(url)
     soup = BeautifulSoup(web_data.text, 'lxml')
-    title = soup.title.text
-    price = soup.select('span.price')[0].text
-    area = soup.select('.c_25d')[1].text
-    date = soup.select('.time')[0].text
-    print(date)
+    no_longer_exist = '404' in soup.find('script', type='text/javascript').get('src').split('/')
+    if no_longer_exist:
+        pass
+    else:
+        title = soup.title.text
+        price = soup.select('span.price')[0].text
+        area = list(soup.select('.c_25d')[1].stripped_strings) if soup.find_all('span', 'c_25d') else None
+        date = soup.select('.time')[0].text
+        data = {
+            'title': title,
+            'price': price,
+            'area': area,
+            'date': date
+        }
+        item_info.insert_one(data)
+        print(data)
 
 # get_link_from('http://xm.58.com/tushubook/', 3)
 
-get_item_info('http://xm.58.com/bijibendiannao/25457681070796x.shtml')
+# get_item_info('http://xm.58.com/bijibendiannao/25457681070796x.shtml')
+
+
