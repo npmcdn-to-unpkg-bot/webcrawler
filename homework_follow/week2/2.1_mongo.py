@@ -16,5 +16,7 @@ tab_lines = walden['tab_line']
 #         tab_lines.insert_one(data)
 
 
-for item in tab_lines.find({'words': {'$lt': 100, '$gt': 90}}):
-    print(item)
+# for item in tab_lines.find({'words': {'$lt': 100, '$gt': 90}}):
+#     print(item)
+
+print(tab_lines.find().count())
