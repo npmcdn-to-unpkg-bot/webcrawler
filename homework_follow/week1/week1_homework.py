@@ -6,12 +6,12 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) \
     Chrome/49.0.2623.87 Safari/537.36'
 }
-start_url = 'http://bj.58.com/pbdn/0/'
 
 
-def get_item_link(url):
+def get_item_link(who_sells):
+    start_url = 'http://bj.58.com/pbdn/{}/'.format(who_sells)
     item_links = []
-    web_data = requests.get(url, headers=headers)
+    web_data = requests.get(start_url, headers=headers)
     soup = BeautifulSoup(web_data.text, 'lxml')
     time.sleep(1)
     links = soup.select('td.t a.t')
@@ -24,11 +24,13 @@ def get_item_link(url):
     return item_links
 
 
-def get_item_info(item_links):
+def get_item_info(who_sells=0):
+    item_links = get_item_link(who_sells)
     for link in item_links:
         web_data = requests.get(link, headers=headers)
         time.sleep(1)
         soup = BeautifulSoup(web_data.text, 'lxml')
+        # seller_mark = link.split('/')[-1]
         cate = soup.select('.crb_i a')[1].text
         title = soup.select('#content h1')[0].text
         date = soup.select('li.time')[0].text
@@ -40,7 +42,8 @@ def get_item_info(item_links):
             'date': date,
             'price': price,
             'position': position,
-            'views': get_views(link)
+            'views': get_views(link),
+            'seller': '个人' if who_sells == 0 else '商家'
         }
         print(data)
 
@@ -51,8 +54,7 @@ def get_views(link):
     return web_data.text.split('=')[-1]
 
 
-item_urls = get_item_link(start_url)
-get_item_info(item_urls)
+get_item_info()
 
 # print(get_views('http://bj.58.com/pingbandiannao/25481834511792x.shtml'))
 
