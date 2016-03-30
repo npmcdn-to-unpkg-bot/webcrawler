@@ -25,7 +25,7 @@ def get_channel_pages(channel_urls, stop_page, start_page=1):
     for channel_url in channel_urls:
         for page in range(start_page, stop_page+1):
             channel_pages.append(channel_url+'o{}'.format(page))
-            return channel_pages
+    return channel_pages
 
 
 def get_item_pages(pages):
@@ -62,10 +62,16 @@ def get_item_info(item_pages):
         print(data)
 
 
-channels = get_channels(start_url)
-pages = get_channel_pages(channels, 2)
-item_pages = get_item_pages(pages)
-get_item_info(item_pages)
+# channels = get_channels(start_url)
+#
+# pages = get_channel_pages(channels, 1)
+#
+# item_pages = get_item_pages(pages)
+# for i in item_pages:
+#     print(i)
+
+# get_item_info(item_pages)
 
 
 # get_item_info(['http://bj.ganji.com/jiaju/1802057617x.htm'])
+
