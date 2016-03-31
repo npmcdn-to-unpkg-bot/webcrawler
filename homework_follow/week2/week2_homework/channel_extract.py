@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import time
+from multiprocessing import Pool
 
 start_url = 'http://bj.ganji.com/wu'
 headers = {
@@ -36,50 +37,67 @@ def get_item_pages(pages):
         items = soup.select('dd.feature li > a')
         for item in items:
             item_pages.append(item.get('href'))
+            print(item.get('href'))
     return item_pages
 
 
-def get_item_info(item_pages):
-    for one_page in item_pages:
-        web_data = requests.get(one_page, headers=headers)
-        time.sleep(2)
-        soup = BeautifulSoup(web_data.text, 'lxml')
-        title = soup.select('h1.title-name')[0].text
-        price = soup.select('i.f22')[0].text
-        date = soup.select('i.pr-5')[0].text.strip()[0:5]
-        type = soup.select('.det-infor li > span > a')[0].text
-        place = list(i.text for i in soup.select('.det-infor li > a')[1:])
-        condition = list(soup.select('.second-det-infor li')
-                         [0].stripped_strings)[1] if soup.find_all('ul', 'second-det-infor') else None
-        data = {
-            'title': title,
-            'price': price,
-            'date': date,
-            'type': type,
-            'place': place,
-            'condition': condition
-        }
-        print(data)
+def get_item_info(one_page):
+    web_data = requests.get(one_page, headers=headers)
+    time.sleep(2)
+    soup = BeautifulSoup(web_data.text, 'lxml')
+    title = soup.select('h1.title-name')[0].text
+    price = soup.select('i.f22')[0].text
+    date = soup.select('i.pr-5')[0].text.strip()[0:5]
+    type = soup.select('.det-infor li > span > a')[0].text
+    place = list(i.text for i in soup.select('.det-infor li > a')[1:])
+    condition = list(soup.select('.second-det-infor li')
+                     [0].stripped_strings)[1] if soup.find_all('ul', 'second-det-infor') else None
+    data = {
+        'title': title,
+        'price': price,
+        'date': date,
+        'type': type,
+        'place': place,
+        'condition': condition
+    }
+    print(data)
+
+# def get_item_info(item_pages):
+#     for one_page in item_pages:
+#         web_data = requests.get(one_page, headers=headers)
+#         time.sleep(2)
+#         soup = BeautifulSoup(web_data.text, 'lxml')
+#         title = soup.select('h1.title-name')[0].text
+#         price = soup.select('i.f22')[0].text
+#         date = soup.select('i.pr-5')[0].text.strip()[0:5]
+#         type = soup.select('.det-infor li > span > a')[0].text
+#         place = list(i.text for i in soup.select('.det-infor li > a')[1:])
+#         condition = list(soup.select('.second-det-infor li')
+#                          [0].stripped_strings)[1] if soup.find_all('ul', 'second-det-infor') else None
+#         data = {
+#             'title': title,
+#             'price': price,
+#             'date': date,
+#             'type': type,
+#             'place': place,
+#             'condition': condition
+#         }
+#         print(data)
 
 
-# channels = get_channels(start_url)
-# print(channels)
-#
-# pages = get_channel_pages(channels, 1)
-#
-# item_pages = get_item_pages(pages)
+channels = get_channels(start_url)
+pages = get_channel_pages(channels, 1)
+# for i in pages:
+#     print(i)
+item_pages = get_item_pages(pages)
 # for i in item_pages:
 #     print(i)
+
 # get_item_info(item_pages)
 # get_item_info(['http://bj.ganji.com/jiaju/1802057617x.htm'])
-channels = ['http://bj.ganji.com/jiaju/', 'http://bj.ganji.com/rirongbaihuo/',
-            'http://bj.ganji.com/shouji/', 'http://bj.ganji.com/shoujihaoma/',
-            'http://bj.ganji.com/bangong/', 'http://bj.ganji.com/nongyongpin/',
-            'http://bj.ganji.com/jiadian/', 'http://bj.ganji.com/ershoubijibendiannao/',
-            'http://bj.ganji.com/ruanjiantushu/', 'http://bj.ganji.com/yingyouyunfu/',
-            'http://bj.ganji.com/diannao/', 'http://bj.ganji.com/xianzhilipin/',
-            'http://bj.ganji.com/fushixiaobaxuemao/', 'http://bj.ganji.com/meironghuazhuang/',
-            'http://bj.ganji.com/shuma/', 'http://bj.ganji.com/laonianyongpin/',
-            'http://bj.ganji.com/xuniwupin/', 'http://bj.ganji.com/qitawupin/',
-            'http://bj.ganji.com/ershoufree/', 'http://bj.ganji.com/wupinjiaohuan/']
-
+#
+# if __name__ == '__main__':
+#     p = Pool()
+#     p.map(get_item_info, item_pages)
+#     p.close()
+#     p.join()
