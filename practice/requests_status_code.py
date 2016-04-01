@@ -1,4 +1,7 @@
-import requests
+# -*- coding:utf-8 -*-
 
-r = requests.get('http://xm.ganji.com/rirongbaihuo/17736671194x.htm')
-print(type(r.status_code))
+import urllib.request
+
+url = r"http://www.juchifs.com/Captcha.aspx?"
+urllib.request.urlretrieve(url, '*')
+
