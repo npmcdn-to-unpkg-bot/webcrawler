@@ -1,5 +1,5 @@
 from channel_extract import channels
-from page_parsing import get_item_url
+from page_parsing import get_item_url, item_info
 from multiprocessing import Pool
 
 
