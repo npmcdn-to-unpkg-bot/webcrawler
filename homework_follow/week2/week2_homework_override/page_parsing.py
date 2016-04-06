@@ -22,12 +22,18 @@ def get_item_url(channel, page, who_sells='o'):
     if soup.find_all('ul', 'pageLink'):
         items = soup.select('dd.feature li > a')
         for item in items:
-            url = item.get('href')
-            if url not in list(item_url.find())[0]['item_url']:
-                print(url)
-                item_url.insert_one({'item_url': url})
+            # Get short link
+            url = requests.get(item.get('href'), headers=headers).url
+            time.sleep(2)
+            # Check duplicates before data is inserted
+            if url not in list(i['item_url'] for i in item_url.find()):
+                # Exclude Zhuanzhuan items
+                if 'zhuanzhuan' and 'sorry' not in url.split('/'):
+                    print(url)
+                    item_url.insert_one({'item_url': url})
     else:
         pass
+    # print(list(item_url.find()))
 
 
 def get_item_info(one_page):
@@ -50,8 +56,11 @@ def get_item_info(one_page):
             'date': date,
             'type': type,
             'place': place,
-            'condition': condition
+            'condition': condition,
+            'url': one_page
         }
         print(data)
 
-# print(list(item_url.find())[0]['item_url'])
+# for i in item_url.find():
+#     print(i['item_url'])
+
