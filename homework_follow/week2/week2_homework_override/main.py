@@ -33,7 +33,7 @@ if __name__ == '__main__':
     # own_urls = set(i['url'] for i in item_info.find())
     # all_urls = set(i['item_url'] for i in item_url.find())
     # rest_urls = all_urls - own_urls
-    # # p2 = Pool()
+    # p2 = Pool()
     # p2.map(get_item_info, rest_urls)
     # p2.close()
     # p2.join()
