@@ -33,7 +33,7 @@ def get_item_url(channel, page, who_sells='o'):
         for item in items:
             # Get short link
             url = requests.get(item.get('href'), headers=headers).url
-            time.sleep(2)
+            time.sleep(1)
             # Check duplicates before data is inserted
             if url not in list(i['item_url'] for i in item_url.find()):
                 # Exclude Zhuanzhuan items
