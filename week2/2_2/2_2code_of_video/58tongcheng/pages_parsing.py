@@ -15,7 +15,7 @@ def get_links_from(channel, pages, who_sells=0):
     # td.t 没有这个就终止
     list_view = '{}{}/pn{}/'.format(channel, str(who_sells), str(pages))
     wb_data = requests.get(list_view)
-    time.sleep(1)
+    time.sleep(2)
     soup = BeautifulSoup(wb_data.text, 'lxml')
     if soup.find('td', 't'):
         for link in soup.select('td.t a.t'):
