@@ -30,7 +30,7 @@ def get_data(asin):
     # print(len(soup.select('#merchant-info a')))
     fulfilled_by_amazon = True if len(soup.select('#merchant-info a')) == 2 else False
     no_buybox_list = True if soup.find_all(id='unqualifiedBuyBox') else False
-    ASIN = url.split('?')[0].split('/')[-2]
+    # ASIN = url.split('?')[0].split('/')[-2]
 
 
     # Detailed sellers for listings with buybox: new...(more than 1 seller)
@@ -47,7 +47,7 @@ def get_data(asin):
                 sellers2 = [j.get('alt').strip() for j in soup2.select('h3 > a > img')]
                 # print('seller2:', sellers2)
                 detail_sellers = sellers1 + sellers2
-                print('detail_selelrs:', detail_sellers)
+                # print('detail_selelrs:', detail_sellers)
                 gcs = list()
                 gcs.append(golden_cart_seller)
                 no_cart_sellers = list(set(detail_sellers) - set(cart_sellers) - set(gcs))

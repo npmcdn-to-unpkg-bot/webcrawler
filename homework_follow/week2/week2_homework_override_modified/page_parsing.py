@@ -43,7 +43,9 @@ def get_item_url(channel, page, who_sells='o'):
 
 
 def get_item_info(one_page):
+    print(one_page)
     web_data = requests.get(one_page, headers=headers)
+    print(web_data.status_code)
     if web_data.status_code == 404:
         pass
     else:
