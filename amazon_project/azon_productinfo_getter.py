@@ -33,6 +33,9 @@ def get_asin(url):
     # return asin_list
 
 
+
 if __name__ == '__main__':
-    for p in range(1, 10):
-        get_asin(get_page(p))
+    pass
+    # for p in range(1, 10):
+    #     get_asin(get_page(p))
+    # get_asin('http://www.amazon.com/s/ref=sr_pg_2?rh=i%3Aaps%2Ck%3Asaae+bracelet&page=2&keywords=saae+bracelet&ie=UTF8&qid=1460537937')
