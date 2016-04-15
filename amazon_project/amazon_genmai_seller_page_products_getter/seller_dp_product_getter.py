@@ -4,7 +4,7 @@ import json
 import time
 from bs4 import BeautifulSoup
 
-url = 'http://www.amazon.com/sp?_encoding=UTF8&asin=&isAmazonFulfilled=&isCBA=&marketplaceID=ATVPDKIKX0DER&orderID=&seller=A16SQ5W44BPK3&tab=&vasStoreID='
+url = 'http://www.amazon.com/sp?_encoding=UTF8&asin=&isAmazonFulfilled=1&isCBA=&marketplaceID=ATVPDKIKX0DER&orderID=&seller=A2NOJB13WPUTQ6&tab=&vasStoreID=#products'
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 \
 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36',
            'Referer': 'http://www.amazon.com/sp?_encoding=UTF8&asin=&isAmazonFulfilled\
@@ -35,7 +35,7 @@ def get_products_asin(store_link, page):
     # print(marketplace)
     # print(seller)
     psr = {'marketplace': marketplace, 'seller': seller, 'url': '/sp/ajax/products',
-           'pageSize': 12, "searchKeyword": "wrap bracelet",
+           'pageSize': 12, "searchKeyword": "",
            "extraRestrictions": {}, "pageNumber": page}
     # 要传的参数中如果有字典，要将字典转为JSON格式
     payload = {'marketplaceID': marketplace,
