@@ -5,4 +5,5 @@ windows:
 显示此数据库内所有表(collection)：show tables
 创建新表(collection)：db.createCollection('new collection')
 导入json格式数据库文件到表：mongoimport -d database_name -c collection_name path/file_name.json
+导出csv/json: mongoexport -d database_name -c collection_name -o output/path.csv
 将表collection_A复制到表collection_B(常用来备份): db.collection_A.copyTo('collection_B')
